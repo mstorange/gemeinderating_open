@@ -13,6 +13,25 @@ def wide_space_default():
     st.set_page_config(layout='wide')
 wide_space_default()
 
+def check_password():
+    def password_entered():
+        if st.session_state["password"] == st.secrets["password"]:
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        return False
+    elif not st.session_state["password_correct"]:
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        st.error("😕 Password incorrect")
+        return False
+    else:
+        return True
+
+
 st.title('Gemeinderating von CAJ/MST')
 st.write('Die Karte zeigt, wie attraktiv eine Gemeinde aus Sicht eines Investors ist. Alle Gemeinden der ausgewählten Kantone werden hierzu miteinander verglichen. Als Datenbasis gelten WP-Berichte sowie die im Herbst 2025 publizierte Studie von Urbanistica & Sotomo zum Innenentwicklungspotenzial von Schweizer Gemeinden.')
 
@@ -563,7 +582,10 @@ if submitted:
     #folium.LayerControl(collapsed=False).add_to(m)
     
     # layer control verschwindet, wenn width zu breit ist! zudem muss oben der default wide mode ausgewählt werden, siehe line direkt nach den lib imports
-    st_data = st_folium(m, height = 500, width = 1300, returned_objects=[])
+    if check_password():
+        st_data = st_folium(m, height = 500, width = 1300, returned_objects=[])
+    else:
+        st.stop()
 
 else:
     if not st.session_state.applied:
