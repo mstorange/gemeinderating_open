@@ -4,4 +4,3 @@ streamlit-folium
 streamlit
 matplotlib
 numpy
-json
