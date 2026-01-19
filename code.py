@@ -3,6 +3,7 @@ import numpy as np
 import geopandas as gpd
 import streamlit as st
 import folium
+import json
 from folium import Element
 from numpy import float64
 import matplotlib.pyplot as plt
@@ -20,13 +21,14 @@ if "applied" not in st.session_state:
     st.session_state.applied = False
 
 
-data = pd.DataFrame()
+data_toml = json.loads(st.secrets["my_data"]["data"])
+data = pd.DataFrame(data_toml)
 
-allurls = ["https://raw.githubusercontent.com/mstorange/gemeinderating/main/AG.csv", "https://raw.githubusercontent.com/mstorange/gemeinderating/main/TG_SG.csv", "https://raw.githubusercontent.com/mstorange/gemeinderating/main/ZG_LU.csv"]
+#allurls = ["https://raw.githubusercontent.com/mstorange/gemeinderating/main/AG.csv", "https://raw.githubusercontent.com/mstorange/gemeinderating/main/TG_SG.csv", "https://raw.githubusercontent.com/mstorange/gemeinderating/main/ZG_LU.csv"]
 
-for file in allurls:
-    df = pd.read_csv(file)
-    data = pd.concat([data, df], ignore_index=True)
+#for file in allurls:
+    #df = pd.read_csv(file)
+    #data = pd.concat([data, df], ignore_index=True)
 
 # nur jene Kantone, wovon mehrere Gemeinden vorkommen
 allekantone = data['Kanton'].value_counts()
@@ -50,6 +52,8 @@ if submitted:
 
     fd = data[data["Kanton"].isin(st.session_state.selected_cantons)].reset_index(drop=True)
     #fd = data[data['Kanton'].isin(selected_cantons)].reset_index(drop=True)
+    fd['Wohnpreis (Miete, 70%-Q)'] = fd['Wohnpreis (aktuell)    ']*1
+    fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
     
     # Wohnpreise
     wertmin, wertmax = fd['Wohnpreis (aktuell)    '].min(), fd['Wohnpreis (aktuell)    '].max()
@@ -382,7 +386,7 @@ if submitted:
     
     
     
-    hoverinfo = folium.GeoJsonTooltip(fields=['Gemeinde', 'Summe1'], aliases=['Gemeinde', 'Rating'])
+    hoverinfo = folium.GeoJsonTooltip(fields=['NAME','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis (50%-Q)', 'Summe1'], aliases=['Gemeinde','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis (50%-Q)', 'Rating'])
     htmlpopup = folium.GeoJsonPopup(fields=['Gemeinde', 'Wohnpreis (aktuell)    ',
      'Wohnpreis (vgl. Region)',
      'Wohnpreis (Entwicklung)',
