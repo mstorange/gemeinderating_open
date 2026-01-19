@@ -262,7 +262,7 @@ if submitted:
     
     
     # Gemeinden georeferenzieren
-    gemeinden2d = gpd.read_file('https://raw.githubusercontent.com/mstorange/gemeinderating/main/Gemeinden2D.gpkg')
+    gemeinden2d = gpd.read_file('https://raw.githubusercontent.com/mstorange/gemeinderating_open/main/Gemeinden2D.gpkg')
     
     
     
