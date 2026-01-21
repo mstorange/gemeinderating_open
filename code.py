@@ -60,6 +60,9 @@ if check_password():
             "Kantone auswählen",
             valid_kantone
         )
+
+        st.write("Gewichte selbst definieren. Falls nichts geändert, wird LM-Gewichtung genommen, falls Gewicht 0 -> Kriterium wird ignoriert.")
+        g_0 = st.number_input("Wohnpreis Miete 70%-Q: ", value=1.5, placeholder="Default: 1.5")
     
         submitted = st.form_submit_button("Anwenden")
     
@@ -246,8 +249,6 @@ if check_password():
         fd['Innenentwicklungspotenzial'] = wertnorm_liste
         
         # Summe
-        st.write("Gewichte selbst definieren. Falls nichts geändert, wird LM-Gewichtung genommen, falls Gewicht 0 -> Kriterium wird ignoriert.")
-        g_0 = st.number_input("Wohnpreis Miete 70%-Q: ", value=1.5, placeholder="Default: 1.5")
         
         kriterien = ['Wohnpreis (aktuell)    ',
                'Wohnpreis (vgl. Region)', 'Wohnpreis (Entwicklung)',
