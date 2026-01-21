@@ -107,8 +107,8 @@ if check_password():
         fd['Steuern DINKs (Avg. Einkommen)'] = fd['Steuern_DINKs          ']*1
         fd['Innenentwicklungspotenzial Sotomo/Urbanistica'] = fd['Innenentwicklungspotenzial']*1
 
-        # slider anwenden
-        fd = fd[fd['Wohnpreis (Miete, 70%-Q)']>=slider_miete1].reset_index(drop=True)
+        # wenn wir die slider hier anwenden, dann werden zuerst die Dinge rausgeworfen und dann die verbleibenden miteinander verglichen -> wollen wir nicht
+        # fd = fd[fd['Wohnpreis (Miete, 70%-Q)']>=slider_miete1].reset_index(drop=True)
 
         # Wohnpreise
         wertmin, wertmax = fd['Wohnpreis (aktuell)    '].min(), fd['Wohnpreis (aktuell)    '].max()
@@ -316,7 +316,6 @@ if check_password():
         
         
         
-        
         # Gemeinden georeferenzieren
         gemeinden2d = gpd.read_file('https://raw.githubusercontent.com/mstorange/gemeinderating_open/main/Gemeinden2D.gpkg')
         
@@ -421,6 +420,9 @@ if check_password():
         
         storedf_geo = storedf_geo.round(2)
         df = storedf_geo.to_crs(epsg=4326)
+
+        # filter nun anwenden
+        df = df[df['Wohnpreis (Miete, 70%-Q)']>=slider_miete1].reset_index(drop=True)
     
         firstobject = df['geometry'][0].centroid
         
