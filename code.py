@@ -61,7 +61,6 @@ if check_password():
             valid_kantone
         )
 
-        fd = data[data["Kanton"].isin(st.session_state.selected_cantons)].reset_index(drop=True)
         fd['Wohnpreis (Miete, 70%-Q)'] = fd['Wohnpreis (aktuell)    ']*1
         fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
         fd['Wohnpreis Miete vgl. zu Region (70%-Q)'] = fd['Wohnpreis (vgl. Region)']*1
@@ -93,7 +92,8 @@ if check_password():
             g_11 = st.number_input("Steuern DINKs: ", value=1, placeholder="Default: 1")
 
         with st.expander("Filter setzen (bspw. nur alle Gemeinden mit Mietpreisen > 250 CHF/m2 einblenden)", expanded=False):
-            slider_miete1 = st.slider(label="Mietzins 70% minimal", min_value=fd['Wohnpreis Miete (70%-Q)'].min(), max_value=fd['Wohnpreis Miete (70%-Q)'].max(), step=10, value=0)
+            # Werte aus WP-Berichte_App.ipynb vom concat der Kantone SG, TG, LU, ZG, AG
+            slider_miete1 = st.slider(label="Mietzins 70% minimal", min_value=150, max_value=550, step=10, value=0)
             
     
         submitted = st.form_submit_button("Anwenden")
@@ -104,6 +104,7 @@ if check_password():
     
         st.write("Folgende Kantone werden analysiert:", ', '.join(selected_cantons))
         #st.write("Typ der selected_cantons variable:", type(selected_cantons))
+        fd = data[data["Kanton"].isin(st.session_state.selected_cantons)].reset_index(drop=True)
 
         # slider anwenden
         fd = fd[fd['Wohnpreis Miete (70%-Q)']>=min_wohnpreis].reset_index(drop=True)
