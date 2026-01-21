@@ -63,6 +63,17 @@ if check_password():
 
         st.write("Gewichte selbst definieren. Falls nichts geändert, wird LM-Gewichtung genommen, falls Gewicht 0 -> Kriterium wird ignoriert.")
         g_0 = st.number_input("Wohnpreis Miete 70%-Q: ", value=1.5, placeholder="Default: 1.5")
+        g_1 = st.number_input("Wohnpreis (Region): ", value=1, placeholder="Default: 1")
+        g_2 = st.number_input("Wohnpreis (Entwicklung): ", value=1.25, placeholder="Default: 1.25")
+        g_3 = st.number_input("Baulandpreis (aktuell): ", value=1.5, placeholder="Default: 1.5")
+        g_4 = st.number_input("Baulandpreis (Entwicklung): ", value=1, placeholder="Default: 1")
+        g_5 = st.number_input("Bevölkerung (Prognose): ", value=1.25, placeholder="Default: 1.25")
+        g_6 = st.number_input("Alterung (Prognose): ", value=1, placeholder="Default: 1")
+        g_7 = st.number_input("Beschäftigte (Prognose): ", value=1, placeholder="Default: 1")
+        g_8 = st.number_input("Erreichbarkeit ÖV: ", value=1.25, placeholder="Default: 1.25")
+        g_9 = st.number_input("Erreichbartkeit MIV: ", value=1.25, placeholder="Default: 1.25")
+        g_10 = st.number_input("Innenentwicklungspotenzial: ", value=1, placeholder="Default: 1")
+        g_11 = st.number_input("Steuern DINKs: ", value=1, placeholder="Default: 1")
     
         submitted = st.form_submit_button("Anwenden")
     
@@ -257,10 +268,11 @@ if check_password():
                'Beschäftigte (Prognose)', 'Erreichbarkeit ÖV      ',
                'Erreichbarkeit MIV     ',
                'Innenentwicklungspotenzial', 'Steuern_DINKs          ']
-        # Gewichte festlegen
+        # Gewichte festlegen: das ist hier ist der Standard LM
         g = [1.5, 1, 1.25, 1.5, 1, 1.25, 1, 1, 1.25, 1.25, 1, 1]
+
         
-        fd['Summe1'] = g_0*fd['Wohnpreis (aktuell)    ']+g[1]*fd['Wohnpreis (vgl. Region)']+g[2]*fd['Wohnpreis (Entwicklung)']+g[3]*fd['Baulandpreis (aktuell) ']+g[4]*fd['Baulandpreis (Entw.)   ']+g[5]*fd['Bevölkerung (Prognose) ']+g[6]*fd['Alterung (Prognose)    ']+g[7]*fd['Beschäftigte (Prognose)']+g[8]*fd['Erreichbarkeit ÖV      ']+g[9]*fd['Erreichbarkeit MIV     ']+g[10]*fd['Steuern_DINKs          ']+g[11]*fd['Innenentwicklungspotenzial']
+        fd['Summe1'] = g_0*fd['Wohnpreis (aktuell)    ']+g_1*fd['Wohnpreis (vgl. Region)']+g_2*fd['Wohnpreis (Entwicklung)']+g_3*fd['Baulandpreis (aktuell) ']+g_4*fd['Baulandpreis (Entw.)   ']+g_5*fd['Bevölkerung (Prognose) ']+g_6*fd['Alterung (Prognose)    ']+g_7*fd['Beschäftigte (Prognose)']+g_8*fd['Erreichbarkeit ÖV      ']+g_9*fd['Erreichbarkeit MIV     ']+g_10*fd['Steuern_DINKs          ']+g_11*fd['Innenentwicklungspotenzial']
         # hier auf keinen Fall sortieren, weil sonst Dataframe ergänzgen falsch wird fd = fd.sort_values(by='Gemeinde', ascending=True)
         fd = fd.round(2)
         
