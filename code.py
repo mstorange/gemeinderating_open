@@ -79,8 +79,18 @@ if check_password():
 
         with st.expander("Filter setzen (bspw. nur alle Gemeinden mit Mietpreisen > 250 CHF/m2 einblenden)", expanded=False):
             # Werte aus WP-Berichte_App.ipynb vom concat der Kantone SG, TG, LU, ZG, AG
-            slider_miete1 = st.slider(label="Mietzins 70% minimal", min_value=150, max_value=550, step=10, value=0)
-            
+            slider_miete1 = st.slider(label="Mietzins (70%-Q.)", min_value=150, max_value=550, step=10, value=(150,550))
+            slider_miete2 = st.slider(label="Mietzins-Verhältnis vgl. zu Region min (70%-Q.)", min_value=0.75, max_value=1.3, step=0.1, value=(0.75,1.3))
+            slider_miete3 = st.slider(label="Mietzins-Entwicklung seit 2023 (70%-Q.)", min_value=1, max_value=1.3, step=0.1, value=(1,1.3))
+            slider_land1 = st.slider(label="Baulandpreis (50%-Q.)", min_value=100, max_value=6500, step=50, value=(100,6500)
+            slider_land2 = st.slider(label="Baulandpreis-Entwicklung (Verhältnis zu 2020, 50%-Q.)", min_value=0.6, max_value=1.8, step=0.1, value=(0.6,1.8))
+            slider_bev = st.slider(label="Bevölkerung Prognose (Verhältnis zu 2055)", min_value=75, max_value=160, step=10, value=(75,160))
+            slider_alterung = st.slider(label="Alterung Prognose (Anteil Ü50, Verhältnis zu 2045)", min_value=0.8, max_value=1.5, step=0.1, value=(0.8,1.5))
+            slider_beschäftigte = st.slider(label="Beschäftigte Prognose (Verhältnis zu 2050)", min_value=0.6, max_value=1.4, step=0.1, value=(0.6,1.4))
+            slider_err_öv = st.slider(label="Erreichbarkeit ÖV (50 Min.-Umkreis)", min_value=6000, max_value=2000000, step=10000, value=(6000,2000000))
+            slider_err_miv = st.slider(label="Erreichbarkeit MIV (50 Min.-Umkreis)", min_value=300000, max_value=4000000, step=100000, value=(300000,4000000))
+            slider_steuern = st.slider(label="Steuern DINKs (Mittelwert über alle Einkommensklassen)", min_value=0.05, max_value=0.2, step=0.05, value=(0.05,0.2))
+            slider_innen = st.slider(label="Innenentwicklungspotenzial (Sotomo/Urbanistica)", min_value=0, max_value=2.5, step=0.1, value=(0,2.5))
     
         submitted = st.form_submit_button("Anwenden")
     
@@ -94,7 +104,7 @@ if check_password():
 
         # für die Slider: absolute Werte ergänzen
         fd['Wohnpreis (Miete, 70%-Q)'] = fd['Wohnpreis (aktuell)    ']*1
-        fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
+        #fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
         fd['Wohnpreis Miete vgl. zu Region (70%-Q)'] = fd['Wohnpreis (vgl. Region)']*1
         fd['Wohnpreis Entwicklung seit 2023 (70%-Q)'] = fd['Wohnpreis (Entwicklung)']*1
         fd['Baulandpreis aktuell (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
@@ -422,7 +432,25 @@ if check_password():
         df = storedf_geo.to_crs(epsg=4326)
 
         # filter nun anwenden
-        df = df[df['Wohnpreis (Miete, 70%-Q)']>=slider_miete1].reset_index(drop=True)
+        
+        #df = df[df['Wohnpreis (Miete, 70%-Q)']>=slider_miete1].reset_index(drop=True)
+        df = df[(df['Wohnpreis (Miete, 70%-Q)']>=slider_miete1[0])&(df['Wohnpreis (Miete, 70%-Q)']<=slider_miete1[1])].reset_index(drop=True)
+        #df = df[df['Wohnpreis Miete vgl. zu Region (70%-Q)']>=slider_miete2].reset_index(drop=True)
+        df = df[(df['Wohnpreis Miete vgl. zu Region (70%-Q)']>=slider_miete2[0])&(df['Wohnpreis Miete vgl. zu Region (70%-Q)']<=slider_miete2[1])].reset_index(drop=True)
+        #df = df[df['Wohnpreis Entwicklung seit 2023 (70%-Q)']>=slider_miete3].reset_index(drop=True)
+        df = df[(df['Wohnpreis Entwicklung seit 2023 (70%-Q)']>=slider_miete3[0])&(df['Wohnpreis Entwicklung seit 2023 (70%-Q)']<=slider_miete3[1])].reset_index(drop=True)
+        #df = df[df['Baulandpreis aktuell (50%-Q)']<=slider_land1]
+        df = df[(df['Baulandpreis aktuell (50%-Q)']>=slider_land1[0])&(df['Baulandpreis aktuell (50%-Q)']<=slider_land1[1])].reset_index(drop=True)
+        #df = df[df['Baulandpreis Entwicklung seit 2020']<=slider_land2]
+        df = df[(df['Baulandpreis Entwicklung seit 2020']>=slider_land2[0])&(df['Baulandpreis Entwicklung seit 2020']<=slider_land2[1])].reset_index(drop=True)
+        df = df[(df['Bevölkerung Prognose bis 2055']>=slider_bev[0])&(df['Bevölkerung Prognose bis 2055']<=slider_bev[1])].reset_index(drop=True)
+        df = df[(df['Alterung Prognose bis 2045 (Anteil Ü50)']>=slider_alterung[0])&(df['Alterung Prognose bis 2045 (Anteil Ü50)']<=slider_alterung[1])].reset_index(drop=True)
+        df = df[(df['Beschäftigte Prognose bis 2050']>=slider_beschäftigte[0])&(df['Beschäftigte Prognose bis 2050']<=slider_beschäftigte[1])].reset_index(drop=True)
+        df = df[(df['Erreichbarkeit ÖV (50 Min.)']>=slider_err_öv[0])&(df['Erreichbarkeit ÖV (50 Min.)']<=slider_err_öv[1])].reset_index(drop=True)
+        df = df[(df['Erreichbarkeit MIV (50 Min.)']>=slider_err_miv[0])&(df['Erreichbarkeit MIV (50 Min.)']<=slider_err_miv[1])].reset_index(drop=True)
+        df = df[(df['Steuern DINKs (Avg. Einkommen)']>=slider_steuern[0])&(df['Steuern DINKs (Avg. Einkommen)']<=slider_steuern[1])].reset_index(drop=True)
+        df = df[(df['Innenentwicklungspotenzial Sotomo/Urbanistica']>=slider_innen[0])&(df['Innenentwicklungspotenzial Sotomo/Urbanistica']<=slider_innen[1])].reset_index(drop=True)
+        
     
         firstobject = df['geometry'][0].centroid
         
