@@ -108,7 +108,7 @@ if check_password():
         fd['Innenentwicklungspotenzial Sotomo/Urbanistica'] = fd['Innenentwicklungspotenzial']*1
 
         # slider anwenden
-        fd = fd[fd['Wohnpreis Miete (70%-Q)']>=min_wohnpreis].reset_index(drop=True)
+        fd = fd[fd['Wohnpreis Miete (70%-Q)']>=slider_miete1].reset_index(drop=True)
 
         # Wohnpreise
         wertmin, wertmax = fd['Wohnpreis (aktuell)    '].min(), fd['Wohnpreis (aktuell)    '].max()
