@@ -61,6 +61,22 @@ if check_password():
             valid_kantone
         )
 
+        fd = data[data["Kanton"].isin(st.session_state.selected_cantons)].reset_index(drop=True)
+        fd['Wohnpreis (Miete, 70%-Q)'] = fd['Wohnpreis (aktuell)    ']*1
+        fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
+        fd['Wohnpreis Miete vgl. zu Region (70%-Q)'] = fd['Wohnpreis (vgl. Region)']*1
+        fd['Wohnpreis Entwicklung seit 2023 (70%-Q)'] = fd['Wohnpreis (Entwicklung)']*1
+        fd['Baulandpreis aktuell (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
+        fd['Baulandpreis Entwicklung seit 2020'] = fd['Baulandpreis (Entw.)   ']*1
+        fd['Bevölkerung Prognose bis 2055'] = fd['Bevölkerung (Prognose) ']*1
+        fd['Alterung Prognose bis 2045 (Anteil Ü50)'] = fd['Alterung (Prognose)    ']*1
+        fd['Beschäftigte Prognose bis 2050'] = fd['Beschäftigte (Prognose)']*1
+        fd['Erreichbarkeit ÖV (50 Min.)'] = fd['Erreichbarkeit ÖV      ']*1
+        fd['Erreichbarkeit MIV (50 Min.)'] = fd['Erreichbarkeit MIV     ']*1
+        fd['Steuern DINKs (Avg. Einkommen)'] = fd['Steuern_DINKs          ']*1
+        fd['Innenentwicklungspotenzial Sotomo/Urbanistica'] = fd['Innenentwicklungspotenzial']*1
+        
+
         st.write("Gewichte selbst definieren. Falls nichts geändert, wird LM-Gewichtung genommen, falls Gewicht 0 -> Kriterium wird ignoriert.")
         with st.expander("Gewichte aufklappen", expanded=False):
             g_0 = st.number_input("Wohnpreis Miete 70%-Q: ", value=1.5, placeholder="Default: 1.5")
@@ -75,6 +91,10 @@ if check_password():
             g_9 = st.number_input("Erreichbartkeit MIV: ", value=1.25, placeholder="Default: 1.25")
             g_10 = st.number_input("Innenentwicklungspotenzial: ", value=1, placeholder="Default: 1")
             g_11 = st.number_input("Steuern DINKs: ", value=1, placeholder="Default: 1")
+
+        with st.expander("Filter setzen (bspw. nur alle Gemeinden mit Mietpreisen > 250 CHF/m2 einblenden)", expanded=False):
+            slider_miete1 = st.slider(label="Mietzins 70% minimal", min_value=fd['Wohnpreis Miete (70%-Q)'].min(), max_value=fd['Wohnpreis Miete (70%-Q)'].max(), step=10, value=0)
+            
     
         submitted = st.form_submit_button("Anwenden")
     
@@ -84,12 +104,10 @@ if check_password():
     
         st.write("Folgende Kantone werden analysiert:", ', '.join(selected_cantons))
         #st.write("Typ der selected_cantons variable:", type(selected_cantons))
-    
-        fd = data[data["Kanton"].isin(st.session_state.selected_cantons)].reset_index(drop=True)
-        #fd = data[data['Kanton'].isin(selected_cantons)].reset_index(drop=True)
-        fd['Wohnpreis (Miete, 70%-Q)'] = fd['Wohnpreis (aktuell)    ']*1
-        fd['Baulandpreis (50%-Q)'] = fd['Baulandpreis (aktuell) ']*1
-        
+
+        # slider anwenden
+        fd = fd[fd['Wohnpreis Miete (70%-Q)']>=min_wohnpreis].reset_index(drop=True)
+
         # Wohnpreise
         wertmin, wertmax = fd['Wohnpreis (aktuell)    '].min(), fd['Wohnpreis (aktuell)    '].max()
         
