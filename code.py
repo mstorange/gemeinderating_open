@@ -556,18 +556,18 @@ if check_password():
             <b>Informationen</b><br>
             Je grösser der Wert, desto attraktiver die Gemeinde für einen Investor.<br><br>
             Gewichte:<br>
-            {kriterien[0]}: {g[0]}<br>
-            {kriterien[1]}: {g[1]}<br>
-            {kriterien[2]}: {g[2]}<br>
-            {kriterien[3]}: {g[3]}<br>
-            {kriterien[4]}: {g[4]}<br>
-            {kriterien[5]}: {g[5]}<br>
-            {kriterien[6]}: {g[6]}<br>
-            {kriterien[7]}: {g[7]}<br>
-            {kriterien[8]}: {g[8]}<br>
-            {kriterien[9]}: {g[9]}<br>
-            {kriterien[10]}: {g[10]}<br>
-            {kriterien[11]}: {g[11]}<br>
+            {kriterien[0]}: {g_0}<br>
+            {kriterien[1]}: {g_1}<br>
+            {kriterien[2]}: {g_2}<br>
+            {kriterien[3]}: {g_3}<br>
+            {kriterien[4]}: {g_4}<br>
+            {kriterien[5]}: {g_5}<br>
+            {kriterien[6]}: {g_6}<br>
+            {kriterien[7]}: {g_7}<br>
+            {kriterien[8]}: {g_8}<br>
+            {kriterien[9]}: {g_9}<br>
+            {kriterien[10]}: {g_10}<br>
+            {kriterien[11]}: {g_11}<br>
             <br><br>
             <button onclick="document.getElementById('sdfd').style.display='none'">Schliessen</button>
           </div>
