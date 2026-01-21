@@ -472,7 +472,7 @@ if check_password():
         
         
         
-        hoverinfo = folium.GeoJsonTooltip(fields=['NAME','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis (50%-Q)', 'Summe1'], aliases=['Gemeinde','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis (50%-Q)', 'Rating'])
+        hoverinfo = folium.GeoJsonTooltip(fields=['NAME','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis aktuell (50%-Q)', 'Summe1'], aliases=['Gemeinde','Wohnpreis (Miete, 70%-Q)', 'Baulandpreis aktuell (50%-Q)', 'Rating'])
         htmlpopup = folium.GeoJsonPopup(fields=['Gemeinde', 'Wohnpreis (aktuell)    ',
          'Wohnpreis (vgl. Region)',
          'Wohnpreis (Entwicklung)',
