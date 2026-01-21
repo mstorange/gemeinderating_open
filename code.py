@@ -90,7 +90,7 @@ if check_password():
             slider_err_öv = st.slider(label="Erreichbarkeit ÖV (50 Min.-Umkreis)", min_value=6000, max_value=2000000, step=10000, value=(6000,2000000))
             slider_err_miv = st.slider(label="Erreichbarkeit MIV (50 Min.-Umkreis)", min_value=300000, max_value=4000000, step=100000, value=(300000,4000000))
             slider_steuern = st.slider(label="Steuern DINKs (Mittelwert über alle Einkommensklassen)", min_value=0.05, max_value=0.2, step=0.05, value=(0.05,0.2))
-            slider_innen = st.slider(label="Innenentwicklungspotenzial (Sotomo/Urbanistica)", min_value=0, max_value=2.5, step=0.1, value=(0.0,2.5))
+            slider_innen = st.slider(label="Innenentwicklungspotenzial (Sotomo/Urbanistica)", min_value=0.0, max_value=2.5, step=0.1, value=(0.0,2.5))
     
         submitted = st.form_submit_button("Anwenden")
     
