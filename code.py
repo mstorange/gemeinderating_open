@@ -81,7 +81,7 @@ if check_password():
             # Werte aus WP-Berichte_App.ipynb vom concat der Kantone SG, TG, LU, ZG, AG
             slider_miete1 = st.slider(label="Mietzins (70%-Q.)", min_value=150, max_value=550, step=10, value=(150,550))
             slider_miete2 = st.slider(label="Mietzins-Verhältnis vgl. zu Region min (70%-Q.)", min_value=0.75, max_value=1.3, step=0.1, value=(0.75,1.3))
-            slider_miete3 = st.slider(label="Mietzins-Entwicklung seit 2023 (70%-Q.)", min_value=1, max_value=1.3, step=0.1, value=(1.0,1.3))
+            slider_miete3 = st.slider(label="Mietzins-Entwicklung seit 2023 (70%-Q.)", min_value=1.0, max_value=1.3, step=0.1, value=(1.0,1.3))
             slider_land1 = st.slider(label="Baulandpreis (50%-Q.)", min_value=100, max_value=6500, step=50, value=(100,6500))
             slider_land2 = st.slider(label="Baulandpreis-Entwicklung (Verhältnis zu 2020, 50%-Q.)", min_value=0.6, max_value=1.8, step=0.1, value=(0.6,1.8))
             slider_bev = st.slider(label="Bevölkerung Prognose (Verhältnis zu 2055)", min_value=75, max_value=160, step=10, value=(75,160))
