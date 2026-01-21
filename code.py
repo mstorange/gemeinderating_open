@@ -246,6 +246,8 @@ if check_password():
         fd['Innenentwicklungspotenzial'] = wertnorm_liste
         
         # Summe
+        st.write("Gewichte selbst definieren. Falls nichts geändert, wird LM-Gewichtung genommen, falls Gewicht 0 -> Kriterium wird ignoriert.")
+        g_0 = st.number_input("Wohnpreis Miete 70%-Q: ", value=1.5, placeholder="Default: 1.5")
         
         kriterien = ['Wohnpreis (aktuell)    ',
                'Wohnpreis (vgl. Region)', 'Wohnpreis (Entwicklung)',
@@ -257,7 +259,7 @@ if check_password():
         # Gewichte festlegen
         g = [1.5, 1, 1.25, 1.5, 1, 1.25, 1, 1, 1.25, 1.25, 1, 1]
         
-        fd['Summe1'] = g[0]*fd['Wohnpreis (aktuell)    ']+g[1]*fd['Wohnpreis (vgl. Region)']+g[2]*fd['Wohnpreis (Entwicklung)']+g[3]*fd['Baulandpreis (aktuell) ']+g[4]*fd['Baulandpreis (Entw.)   ']+g[5]*fd['Bevölkerung (Prognose) ']+g[6]*fd['Alterung (Prognose)    ']+g[7]*fd['Beschäftigte (Prognose)']+g[8]*fd['Erreichbarkeit ÖV      ']+g[9]*fd['Erreichbarkeit MIV     ']+g[10]*fd['Steuern_DINKs          ']+g[11]*fd['Innenentwicklungspotenzial']
+        fd['Summe1'] = g_0*fd['Wohnpreis (aktuell)    ']+g[1]*fd['Wohnpreis (vgl. Region)']+g[2]*fd['Wohnpreis (Entwicklung)']+g[3]*fd['Baulandpreis (aktuell) ']+g[4]*fd['Baulandpreis (Entw.)   ']+g[5]*fd['Bevölkerung (Prognose) ']+g[6]*fd['Alterung (Prognose)    ']+g[7]*fd['Beschäftigte (Prognose)']+g[8]*fd['Erreichbarkeit ÖV      ']+g[9]*fd['Erreichbarkeit MIV     ']+g[10]*fd['Steuern_DINKs          ']+g[11]*fd['Innenentwicklungspotenzial']
         # hier auf keinen Fall sortieren, weil sonst Dataframe ergänzgen falsch wird fd = fd.sort_values(by='Gemeinde', ascending=True)
         fd = fd.round(2)
         
