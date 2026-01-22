@@ -34,7 +34,6 @@ def check_password():
 if check_password():
     
     st.title('Gemeinderating von CAJ/MST')
-    st.tttitle('wrong')
     st.write('Die Karte zeigt, wie attraktiv eine Gemeinde aus Sicht eines Investors ist. Alle Gemeinden der ausgewählten Kantone werden hierzu miteinander verglichen. Als Datenbasis gelten WP-Berichte sowie die im Herbst 2025 publizierte Studie von Urbanistica & Sotomo zum Innenentwicklungspotenzial von Schweizer Gemeinden.')
     
     # --- session state init ---
