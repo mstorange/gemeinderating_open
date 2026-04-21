@@ -87,7 +87,7 @@ if check_password():
             slider_miete3 = st.slider(label="Mietzins-Entwicklung seit 2023 (70%-Q.)", min_value=data['Wohnpreis (Entwicklung)'].min(), max_value=data['Wohnpreis (Entwicklung)'].max(), step=0.1)
             slider_land1 = st.slider(label="Baulandpreis (50%-Q.)", min_value=data['Baulandpreis (aktuell) '].min(), max_value=data['Baulandpreis (aktuell) '].max(), step=50)
             slider_land2 = st.slider(label="Baulandpreis-Entwicklung (Verhältnis zu 2020, 50%-Q.)", min_value=data['Baulandpreis (Entw.)   '].min(), max_value=data['Baulandpreis (Entw.)   '].max(), step=0.1)
-            slider_bev = st.slider(label="Bevölkerung Prognose (Verhältnis zu 2055)", min_value=data['Bevölkerung (Prognose) '].min(), max_value=data['Bevölkerung (Prognose) '].max(), step=10.0)
+            slider_bev = st.slider(label="Bevölkerung Prognose (Verhältnis zu 2055)", min_value=data['Bevölkerung (Prognose) '].min(), max_value=data['Bevölkerung (Prognose) '].max(), step=10)
             slider_alterung = st.slider(label="Alterung Prognose (Anteil Ü50, Verhältnis zu 2045)", min_value=data['Alterung (Prognose)    '].min(), max_value=data['Alterung (Prognose)    '].max(), step=0.1)
             slider_beschäftigte = st.slider(label="Beschäftigte Prognose (Verhältnis zu 2050)", min_value=data['Beschäftigte (Prognose)'].min(), max_value=data['Beschäftigte (Prognose)'].max(), step=0.1)
             slider_err_öv = st.slider(label="Erreichbarkeit ÖV (50 Min.-Umkreis)", min_value=data['Erreichbarkeit ÖV      '].min(), max_value=data['Erreichbarkeit ÖV      '].max(), step=10000)
